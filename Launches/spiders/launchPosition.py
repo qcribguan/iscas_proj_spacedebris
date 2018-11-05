@@ -24,11 +24,12 @@ class LaunchpositionSpider(scrapy.Spider):
         describe = os.path.join(time_path,'read.txt')
         with open(describe,'w',encoding='utf-8') as tf:
             print('writing...')
-            #print(response.selector.css('html>body>table.center.outline>tbody>tr>td>table.striped-odd'))
-            print(response.selector.css('html>body>center'))
+            print(response)
             #print(response.xpath('/html/body/table[1]/tbody/tr/td'))
-            for table in response.selector.css('html>body>center>table>tr > td > table'):
+            #for table in response.selector.css('html>body>center>table>tr > td > table'):
+            for table in response.selector.css('html>body>table>tr>td>table'):
                 # table.css('table > tr > th > table > tr > td > a')
+                #print(table)
                 titles = table.css('tr > th::text').extract()
                 if (len(titles) > 0):
                     title = titles[0]
@@ -40,7 +41,9 @@ class LaunchpositionSpider(scrapy.Spider):
                     each_name = each.css('a::text').extract()[0]
                     tf.write(title + '--->' + each_name + '--->' + each_url + '\n')
             #for each in response.selector.css('html>body>center>table>tr>td>table>tr>td>a::text').extract():
-        for table in response.selector.css('html>body>center>table>tr > td > table'):
+
+        #for table in response.selector.css('html>body>center>table>tr > td > table'):
+        for table in response.selector.css('html>body>table>tr>td>table'):
             #table.css('table > tr > th > table > tr > td > a')
             titles = table.css('tr > th::text').extract()
             if (len(titles)>0):
